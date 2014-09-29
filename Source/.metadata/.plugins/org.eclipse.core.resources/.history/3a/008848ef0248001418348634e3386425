@@ -1,0 +1,72 @@
+//package
+package userInterface;
+
+//java imports
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+
+//own imports
+import program.Map;
+
+//class
+public class MainWindow {
+
+	//constants
+	public static final int MAP_WIDTH = 1200;
+	public static final int MAP_HEIGHT = 800;
+	
+	//main method
+	public static void main(String[] args) {
+		new MainWindow();
+	}
+	
+	//attributes
+	private JFrame jFrame = new JFrame("Island Generator");
+	private JLabel baseValueLabel = new JLabel();
+	private JPanel mapJPanel = new JPanel();
+	
+	//constructor
+	public MainWindow() {
+		jFrame.setMinimumSize(new Dimension(MAP_WIDTH + 100, MAP_HEIGHT + 100));
+		jFrame.setLocation(100, 100);
+		JPanel jPanel = new JPanel();
+		jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.Y_AXIS));
+		JButton createMapButton = new JButton("New Map");
+		createMapButton.addActionListener(new CreateMapButtonActionListener());
+		jPanel.add(createMapButton);
+		jPanel.add(baseValueLabel);
+		jPanel.add(mapJPanel);
+		jFrame.add(jPanel);
+		createMap();
+		jFrame.setVisible(true);
+	}
+
+	//method
+	private void createMap() {
+		mapJPanel.removeAll();        
+        try {
+        	Map map = new Map(MAP_WIDTH, MAP_HEIGHT);
+        	baseValueLabel.setText(String.format("Base value: %d", map.getBaseValue()));
+			mapJPanel.add(map.getJPanel());
+		}
+        catch (Exception e) {}	
+        jFrame.pack();
+	}
+	
+	//inner class
+	private class CreateMapButtonActionListener implements ActionListener {
+
+		//method
+		public void actionPerformed(ActionEvent e) {
+			createMap();
+		}
+	}
+}

@@ -1,0 +1,47 @@
+//package
+package program;
+
+//class
+public final class ValueGenerator {
+	
+	//static attributes
+	private static int GLOBAL_BASE_VALUE = 0;
+
+	//attributes
+	private int currentValue = 1000 + (++GLOBAL_BASE_VALUE);
+	private int counter = 1;
+	
+	//method
+	public int getBaseValue() {
+		return GLOBAL_BASE_VALUE;
+	}
+	
+	//method
+	public boolean getTrueForPropability(int probability) {
+		return (getNumberBetweenZeroAndValueIncludingBounds(99) > probability);
+	}
+	
+	//method
+	public int getNumberBetweenZeroAndValueIncludingBounds(int value) {
+		updateCurrentValue();
+		return currentValue % (value + 1);
+	}
+	
+	//method
+	private void updateCurrentValue() {
+		if (currentValue > 1000000000) {
+			currentValue = GLOBAL_BASE_VALUE + 10000;
+		}
+		if (counter > 1000000) {
+			counter = 1;
+		}
+		currentValue -= counter++;
+		if (currentValue % 3 == 0) {
+			currentValue += GLOBAL_BASE_VALUE % counter++;
+		}
+		else {
+			currentValue += 1 + GLOBAL_BASE_VALUE % counter;
+			counter += 3;
+		}
+	}
+}

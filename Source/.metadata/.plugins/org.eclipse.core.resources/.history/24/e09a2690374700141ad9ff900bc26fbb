@@ -1,0 +1,178 @@
+//package
+package program;
+
+//java imports
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
+import javax.swing.JPanel;
+
+import java.util.Vector;
+
+//class
+public final class Map {
+	
+	//attributes
+	private int width = 100;
+	private int height = 100;
+	private Vector<Grid> grids = new Vector<Grid>();
+	private ValueGenerator valueGenerator = new ValueGenerator();
+	
+	//constructor
+	public Map() {
+		initialize();
+		buildup();
+	}
+	
+	//constructor
+	public Map(int width, int height) throws Exception {
+		if (width < 1) {
+			throw new Exception("Width is not positive.");
+		}
+		if (height < 1) {
+			throw new Exception("Height is not positive.");
+		}
+		this.width  = width;
+		this.height = height;
+		initialize();
+		buildup();
+	}
+	
+	//method
+	public int getBaseValue() {
+		return valueGenerator.getBaseValue();
+	}
+	
+	//method
+	@SuppressWarnings("serial")
+	public JPanel getJPanel() {
+		return new JPanel() {			
+			
+			//overwritten method
+            protected void paintComponent(Graphics graphics) {
+                super.paintComponent(graphics);                
+                Graphics2D graphics2D = (Graphics2D)graphics;
+                graphics2D.setColor(Color.GREEN);
+                for (Grid grid: grids) {
+                	switch (grid.getKind()) {
+                		case OCEAN:
+                			graphics2D.setColor(Color.BLUE);
+                			break;
+                		case DEEP_OCEAN:
+                			graphics2D.setColor(Color.BLACK);
+                			break;
+                		case COAST:
+                			graphics2D.setColor(Color.YELLOW);
+                			break;
+                		case DESERT:
+                			graphics2D.setColor(Color.ORANGE);
+                			break;
+                		case LAND:
+                			graphics2D.setColor(Color.GREEN);
+                			break;
+                		case HILL:
+                			graphics2D.setColor(new Color(0x61380B));
+                			break;
+                		case MOUNTAIN:
+                			graphics2D.setColor(Color.GRAY);
+                			break;
+                		case HIGH_MOUNTAIN:
+                			graphics2D.setColor(Color.DARK_GRAY);
+                			break;               			
+                	}
+                	graphics2D.drawRect(grid.getX() - 1, height - grid.getY() + 1, 1, 1);
+                }
+            }
+            
+            //overwritten method
+            public Dimension getPreferredSize() {
+                return new Dimension(width + 10, height + 10);
+            }
+        };
+	}
+	
+	//method
+	public int getMiddleX() {
+		return width / 2;
+	}
+	
+	public int getMiddleY() {
+		return height / 2;
+	}
+	
+	//method
+	private void initialize() {
+		try {
+			Grid lowerLeftGrid = new Grid(1, 1);
+			Grid iterator = lowerLeftGrid;
+			for (int i = 1; i <= height; i++) {
+				try {
+					iterator.createRightGrids(width);
+					iterator.createTopGrid();
+					iterator = iterator.getTopGrid();
+				}
+				catch (Exception e) {}
+			}
+			try {
+				iterator.createRightGrids(width);
+			}
+			catch (Exception e) {}
+			iterator = lowerLeftGrid;
+			do {
+				Grid iterator2 = iterator;
+				do {
+					grids.add(iterator2);
+					try {
+						iterator2 = iterator2.getRightGrid();
+					}
+					catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				while (iterator2.hasRightGrid());
+				try {
+					iterator = iterator.getTopGrid();
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			while (iterator.hasTopGrid());
+			}
+		catch (Exception e1) {}
+	}
+	
+	//method
+	private void buildup() {
+		//paint land
+		for (Grid grid: grids) {
+			if (grid.getX() > width / 4 && grid.getX() < 3 * width / 4 && grid.getY() > height / 4 && grid.getY() < 3 * height / 4)
+				if (valueGenerator.getTrueForPropability(1) && valueGenerator.getTrueForPropability(1)) {
+					
+						grid.paintIsland(valueGenerator, 600);
+				}
+		}
+		getCenterGrid().paintIsland(valueGenerator, width / 2);
+		
+		//paint coast
+		for (Grid grid: grids) {
+			if (valueGenerator.getTrueForPropability(10)) {
+				//grid.setKind(GridKind.LAND);
+			}
+		}
+	}
+	
+	//method
+	public Grid getCenterGrid() {
+		int middleX = getMiddleX();
+		int middleY = getMiddleY();
+		for (Grid grid: grids) {
+			if (grid.getX() == middleX && grid.getY() == middleY) {
+				return grid;
+			}
+		}
+		return null;
+	}
+}
