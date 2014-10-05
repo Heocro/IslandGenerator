@@ -1,0 +1,9 @@
+//package
+package program;
+
+//interface
+public interface Colors {
+
+	//constants
+	int BLUE = 0x0000FF;
+}

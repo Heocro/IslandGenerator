@@ -1,0 +1,8 @@
+//package
+package program;
+
+//interface
+public interface Direction {
+
+	in
+}
