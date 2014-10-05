@@ -1,8 +1,0 @@
-//package
-package program;
-
-//interface
-public interface Colors {
-
-	//constants
-}

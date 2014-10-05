@@ -274,19 +274,4 @@ public final class Grid {
 		}
 		return neighbourGrids;
 	}
-	
-	//method
-	public Direction getRandomDirection(ValueGenerator valueGenerator) {
-		int a = valueGenerator.getNumberBetweenZeroAndValueIncludingBounds(3) + 1;
-		if (a == 1) {
-			return Direction.NORTH;
-		}
-		if (a == 2) {
-			return Direction.SOUTH;
-		}
-		if (a == 3) {
-			return Direction.WEST;
-		}
-		return Direction.EAST;
-	}
 }

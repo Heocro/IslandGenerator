@@ -1,3 +1,2 @@
-#Tue Sep 30 12:29:15 CEST 2014
 eclipse.preferences.version=1
-org.eclipse.jdt.launching.PREF_VM_XML=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<vmSettings defaultVM\="57,org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType13,1412072714746" defaultVMConnector\="">\r\n<vmType id\="org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType">\r\n<vm id\="1412072714746" javadocURL\="http\://java.sun.com/javase/7/docs/api/" name\="jre7" path\="C\:\\Program Files\\Java\\jre7"/>\r\n</vmType>\r\n</vmSettings>\r\n
+org.eclipse.jdt.launching.PREF_VM_XML=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<vmSettings defaultVM\="57,org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType13,1412519482253" defaultVMConnector\="">\r\n<vmType id\="org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType">\r\n<vm id\="1412519482253" name\="jre1.8.0_20" path\="C\:\\Program Files\\Java\\jre1.8.0_20"/>\r\n</vmType>\r\n</vmSettings>\r\n

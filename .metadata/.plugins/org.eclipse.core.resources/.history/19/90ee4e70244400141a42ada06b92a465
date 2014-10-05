@@ -1,5 +1,0 @@
-//package
-package program;
-
-//enum
-public enum GridKind { OCEAN, DEEP_OCEAN, DESERT, FOREST, HILL, MOUNTAIN, HIGH_MOUNTAIN }
